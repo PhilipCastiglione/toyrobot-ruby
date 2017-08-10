@@ -23,18 +23,16 @@ RSpec.describe Robot::Parser do
   EOF
 
   it 'recognizes all valid commands and skips others' do
-    prog = Robot::Parser.new(program)
     commands = Set.new
-    prog.run do |tokens|
+    Robot::Parser.parse(program) do |tokens|
       commands << tokens.first
     end
     expect(commands).to eq Set.new(%i[place move left right report])
   end
 
   it 'returns the commands in order' do
-    prog = Robot::Parser.new(program)
     sequence = []
-    prog.run do |tokens|
+    Robot::Parser.parse(program) do |tokens|
       sequence << tokens
     end
     expect(sequence).to eq [[:place, 1, 2, :north],
@@ -46,8 +44,7 @@ RSpec.describe Robot::Parser do
   end
 
   it 'returns appropriate types for command arguments' do
-    prog = Robot::Parser.new(program)
-    prog.run do |tokens|
+    Robot::Parser.parse(program) do |tokens|
       command = tokens.first
       if command == :place
         expect(tokens.length).to eq 4

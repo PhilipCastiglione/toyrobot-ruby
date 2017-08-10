@@ -16,8 +16,7 @@ module Robot
 
     def run(text)
       output = []
-      parser = Parser.new(text)
-      parser.run do |tokens|
+      Parser.parse(text) do |tokens|
         line = run_command(tokens)
         output << line unless line.nil?
       end
