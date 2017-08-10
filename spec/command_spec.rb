@@ -74,6 +74,29 @@ RSpec.describe Robot::Robot do
       expect(robot.direction).to eq :west
     end
 
+    it "does not fall off the table" do
+      grid = Robot::Grid.new
+      robot = Robot::Robot.new(grid)
+      max_x = grid.width - 1
+      max_y = grid.height - 1
+
+      robot.place 0, 0, :west
+      robot.move
+      expect(robot.position.x).to eq 0
+
+      robot.place 0, 0, :south
+      robot.move
+      expect(robot.position.y).to eq 0
+
+      robot.place max_x, max_y, :east
+      robot.move
+      expect(robot.position.x).to eq max_x
+
+      robot.place max_x, max_y, :north
+      robot.move
+      expect(robot.position.y).to eq max_y
+    end
+
   end
 
   context "with LEFT command" do
