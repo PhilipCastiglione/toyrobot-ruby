@@ -11,4 +11,10 @@ RSpec.describe Robot::Grid do
     expect { Robot::Grid.new(5, 0) }.to raise_error(ArgumentError)
   end
 
+  it "has a default width and height of 5 units" do
+    grid = Robot::Grid.new
+    expect(grid.width).to eq 5
+    expect(grid.height).to eq 5
+  end
+
 end
