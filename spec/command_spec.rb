@@ -76,7 +76,7 @@ RSpec.describe Robot::Robot do
 
   end
 
-  context "with LEFT and RIGHT commands" do
+  context "with LEFT or RIGHT command" do
 
     it "has no effect before PLACE" do
       robot = Robot::Robot.new
@@ -102,6 +102,50 @@ RSpec.describe Robot::Robot do
       [:east, :south, :west, :north].each do |direction|
         robot.right
         expect(robot.direction).to eq direction
+      end
+    end
+
+  end
+
+  context "with REPORT command" do
+
+    it "has no effect before PLACE" do
+      robot = Robot::Robot.new
+      expect(robot.report).to be_nil
+    end
+
+    it "returns a non-empty string" do
+      robot = Robot::Robot.new
+      robot.place 1, 2, :north
+      output = robot.report
+      expect(output).to be_a String
+      expect(output.empty?).to be false
+    end
+
+    it "returns three comma-separated values" do
+      robot = Robot::Robot.new
+      robot.place 1, 2, :north
+      output = robot.report
+      expect(output).to match /,/
+      expect(output.split(',').length).to eq 3
+    end
+
+    it "returns an accurate position" do
+      robot = Robot::Robot.new
+      10.times do
+        x = rand(5)
+        y = rand(5)
+        robot.place x, y, :north
+        expect(robot.report).to match /^#{x},#{y},/
+      end
+    end
+
+    it "returns an accurate direction" do
+      robot = Robot::Robot.new
+      10.times do
+        direction = Robot::DIRECTIONS.sample
+        robot.place 2, 2, direction
+        expect(robot.report).to match /,#{direction.to_s.upcase}$/
       end
     end
 
