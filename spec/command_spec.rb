@@ -76,14 +76,11 @@ RSpec.describe Robot::Robot do
 
   end
 
-  context "with LEFT or RIGHT command" do
+  context "with LEFT command" do
 
     it "has no effect before PLACE" do
       robot = Robot::Robot.new
       robot.left
-      expect(robot.direction).to be_nil
-      robot = Robot::Robot.new
-      robot.right
       expect(robot.direction).to be_nil
     end
 
@@ -94,6 +91,16 @@ RSpec.describe Robot::Robot do
         robot.left
         expect(robot.direction).to eq direction
       end
+    end
+
+  end
+
+  context "with RIGHT command" do
+
+    it "has no effect before PLACE" do
+      robot = Robot::Robot.new
+      robot.right
+      expect(robot.direction).to be_nil
     end
 
     it "turns right" do
