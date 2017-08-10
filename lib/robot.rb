@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 module Robot
+
+  DIRECTIONS = [:north, :east, :south, :west]
 
   class Robot
     attr_reader :x, :y, :direction
@@ -17,6 +21,12 @@ module Robot
     end
 
     def place(x, y, direction)
+      raise ArgumentError, "X position out of range" if x < 0 or x >= @grid_width
+      raise ArgumentError, "Y position out of range" if y < 0 or y >= @grid_height
+      raise ArgumentError, "invalid direction" unless DIRECTIONS.include? direction
+      @x = x
+      @y = y
+      @direction = direction
     end
 
     def move
