@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'robot/parser'
+
 module Robot
 
   DIRECTIONS = [:north, :east, :south, :west]
