@@ -10,6 +10,7 @@ RSpec.describe Robot::Robot do
     it "has no position or direction" do
       expect(robot.on_table?).to be false
       expect(robot.position).to be_nil
+      expect(robot.direction).to be_nil
     end
 
   end
