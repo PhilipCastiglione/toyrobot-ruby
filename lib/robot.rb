@@ -1,58 +1,12 @@
 # frozen_string_literal: true
 
+require 'robot/grid'
 require 'robot/parser'
+require 'robot/position'
 
 module Robot
 
   DIRECTIONS = [:north, :east, :south, :west]
-
-  class Grid
-    attr_reader :width, :height
-
-    def initialize(width=5, height=5)
-      if width.nil? or width <= 0 or height.nil? or height <= 0
-        raise ArgumentError, "width and height must be numbers greater than zero"
-      end
-
-      @width = width
-      @height = height
-    end
-  end
-
-  class Position
-    attr_reader :x, :y
-
-    def self.clamp(lower, value, upper)
-      if value < lower
-        lower
-      elsif value > upper
-        upper
-      else
-        value
-      end
-    end
-
-    def initialize(x, y, grid)
-      @x = Position::clamp(0, x, grid.width - 1)
-      @y = Position::clamp(0, y, grid.height - 1)
-    end
-
-    def north(grid)
-      Position.new(@x, @y + 1, grid)
-    end
-
-    def south(grid)
-      Position.new(@x, @y - 1, grid)
-    end
-
-    def east(grid)
-      Position.new(@x + 1, @y, grid)
-    end
-
-    def west(grid)
-      Position.new(@x - 1, @y, grid)
-    end
-  end
 
   class Robot
     attr_reader :position, :direction
@@ -139,16 +93,6 @@ module Robot
 
       "#{@position.x},#{@position.y},#{direction}"
     end
-  end
-
-  def self.main
-    if ARGV.empty?
-      program = $stdin.read
-    else
-      program = File.open(ARGV.first).read
-    end
-
-    Robot.new.run program
   end
 
 end
