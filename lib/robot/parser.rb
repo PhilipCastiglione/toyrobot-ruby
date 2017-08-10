@@ -1,5 +1,4 @@
 module Robot
-
   class Parser
     def initialize(text)
       @text = text
@@ -10,7 +9,8 @@ module Robot
       return nil unless tokens.length == 3
 
       begin
-        x, y = Integer(tokens[0]), Integer(tokens[1])
+        x = Integer(tokens[0])
+        y = Integer(tokens[1])
       rescue ArgumentError, TypeError
         return nil
       end
@@ -27,11 +27,10 @@ module Robot
         if command == :place
           args = self.class.parse_arg_for_place(tokens[1])
           yield [command] + args unless args.nil?
-        elsif [:move, :left, :right, :report].include? command
+        elsif %i[move left right report].include? command
           yield [command]
         end
       end
     end
   end
-
 end

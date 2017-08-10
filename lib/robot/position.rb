@@ -1,5 +1,4 @@
 module Robot
-
   class Position
     attr_reader :x, :y
 
@@ -34,5 +33,4 @@ module Robot
       self.class.new(@x - 1, @y, grid)
     end
   end
-
 end

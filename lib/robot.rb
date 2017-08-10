@@ -3,14 +3,13 @@ require 'robot/parser'
 require 'robot/position'
 
 module Robot
-
-  DIRECTIONS = [:north, :east, :south, :west]
+  DIRECTIONS = %i[north east south west].freeze
 
   class Robot
     attr_reader :position, :direction
     attr_accessor :silent
 
-    def initialize(grid=nil)
+    def initialize(grid = nil)
       @grid = grid || Grid.new
       @silent = false
     end
@@ -19,16 +18,8 @@ module Robot
       output = []
       parser = Parser.new(text)
       parser.run do |tokens|
-        case tokens.first
-        when :place then place(tokens[1], tokens[2], tokens[3])
-        when :move then move
-        when :left then left
-        when :right then right
-        when :report
-          line = report
-          puts(line) unless @silent
-          output << line
-        end
+        line = run_command(tokens)
+        output << line unless line.nil?
       end
       output
     end
@@ -38,7 +29,10 @@ module Robot
     end
 
     def place(x, y, direction)
-      raise ArgumentError, "invalid direction" unless DIRECTIONS.include? direction
+      unless DIRECTIONS.include? direction
+        raise ArgumentError, 'invalid direction'
+      end
+
       @position = Position.new(x, y, @grid)
       @direction = direction
     end
@@ -80,15 +74,33 @@ module Robot
       return unless on_table?
 
       direction = case @direction
-                  when :north then "NORTH"
-                  when :east then "EAST"
-                  when :south then "SOUTH"
-                  when :west then "WEST"
-                  else ""
+                  when :north then 'NORTH'
+                  when :east then 'EAST'
+                  when :south then 'SOUTH'
+                  when :west then 'WEST'
+                  else ''
                   end
 
       "#{@position.x},#{@position.y},#{direction}"
     end
-  end
 
+    private
+
+    def run_command(tokens)
+      case tokens.first
+      when :place then place(tokens[1], tokens[2], tokens[3])
+      when :move then move
+      when :left then left
+      when :right then right
+      when :report then return run_report
+      end
+      nil
+    end
+
+    def run_report
+      line = report
+      puts(line) unless @silent
+      line
+    end
+  end
 end

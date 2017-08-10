@@ -7,14 +7,11 @@ begin
   RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
   task :spec do
-    $stderr.puts "Failed to load RSpec. Please run: $ bundle install"
+    $stderr.puts 'Failed to load RSpec. Please run: $ bundle install'
   end
 end
 
-begin
-  require 'rubocop/rake_task'
-  RuboCop::RakeTask.new
-rescue LoadError
-end
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new
 
 task :default => :spec

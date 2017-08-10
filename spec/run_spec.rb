@@ -1,9 +1,8 @@
-require "robot"
+require 'robot'
 
 RSpec.describe Robot::Robot do
-
-  context "with example input 1" do
-    it "produces the expected output" do
+  context 'with example input 1' do
+    it 'produces the expected output' do
       robot = Robot::Robot.new
       robot.silent = true
       output = robot.run <<-EOF
@@ -16,8 +15,8 @@ RSpec.describe Robot::Robot do
     end
   end
 
-  context "with example input 2" do
-    it "produces the expected output" do
+  context 'with example input 2' do
+    it 'produces the expected output' do
       robot = Robot::Robot.new
       robot.silent = true
       output = robot.run <<-EOF
@@ -30,8 +29,8 @@ RSpec.describe Robot::Robot do
     end
   end
 
-  context "with example input 3" do
-    it "produces the expected output" do
+  context 'with example input 3' do
+    it 'produces the expected output' do
       robot = Robot::Robot.new
       robot.silent = true
       output = robot.run <<-EOF
@@ -46,5 +45,4 @@ RSpec.describe Robot::Robot do
       expect(output.first).to eq '3,3,NORTH'
     end
   end
-
 end

@@ -1,14 +1,11 @@
 module Robot
-
   def self.main
-    if ARGV.empty?
-      program = $stdin.read
-    else
-      program = File.open(ARGV.first).read
-    end
+    program = if ARGV.empty?
+                $stdin.read
+              else
+                File.open(ARGV.first).read
+              end
 
     Robot.new.run program
   end
-
 end
-

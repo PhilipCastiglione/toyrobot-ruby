@@ -1,12 +1,10 @@
-require "robot"
+require 'robot'
 
 RSpec.describe Robot::Robot do
-
-  context "with PLACE command" do
-
+  context 'with PLACE command' do
     robot = Robot::Robot.new
 
-    it "saves the position" do
+    it 'saves the position' do
       robot.place 1, 2, :north
       expect(robot.position.x).to eq 1
       expect(robot.position.y).to eq 2
@@ -15,28 +13,26 @@ RSpec.describe Robot::Robot do
       expect(robot.position.y).to eq 4
     end
 
-    it "saves the direction" do
+    it 'saves the direction' do
       robot.place 1, 2, :north
       expect(robot.direction).to eq :north
       robot.place 3, 4, :south
       expect(robot.direction).to eq :south
     end
 
-    it "must have a valid direction" do
+    it 'must have a valid direction' do
       expect { robot.place 0, 0, :hubwards }.to raise_error(ArgumentError)
     end
-
   end
 
-  context "with MOVE command" do
-
-    it "has no effect before PLACE" do
+  context 'with MOVE command' do
+    it 'has no effect before PLACE' do
       robot = Robot::Robot.new
       robot.move
       expect(robot.position).to be_nil
     end
 
-    it "moves north" do
+    it 'moves north' do
       robot = Robot::Robot.new
       robot.place 2, 2, :north
       robot.move
@@ -45,7 +41,7 @@ RSpec.describe Robot::Robot do
       expect(robot.direction).to eq :north
     end
 
-    it "moves south" do
+    it 'moves south' do
       robot = Robot::Robot.new
       robot.place 2, 2, :south
       robot.move
@@ -54,7 +50,7 @@ RSpec.describe Robot::Robot do
       expect(robot.direction).to eq :south
     end
 
-    it "moves east" do
+    it 'moves east' do
       robot = Robot::Robot.new
       robot.place 2, 2, :east
       robot.move
@@ -63,7 +59,7 @@ RSpec.describe Robot::Robot do
       expect(robot.direction).to eq :east
     end
 
-    it "moves west" do
+    it 'moves west' do
       robot = Robot::Robot.new
       robot.place 2, 2, :west
       robot.move
@@ -72,7 +68,7 @@ RSpec.describe Robot::Robot do
       expect(robot.direction).to eq :west
     end
 
-    it "does not fall off the table" do
+    it 'does not fall off the table' do
       grid = Robot::Grid.new
       robot = Robot::Robot.new(grid)
       max_x = grid.width - 1
@@ -94,55 +90,49 @@ RSpec.describe Robot::Robot do
       robot.move
       expect(robot.position.y).to eq max_y
     end
-
   end
 
-  context "with LEFT command" do
-
-    it "has no effect before PLACE" do
+  context 'with LEFT command' do
+    it 'has no effect before PLACE' do
       robot = Robot::Robot.new
       robot.left
       expect(robot.direction).to be_nil
     end
 
-    it "turns left" do
+    it 'turns left' do
       robot = Robot::Robot.new
       robot.place 2, 2, :north
-      [:west, :south, :east, :north].each do |direction|
+      %i[west south east north].each do |direction|
         robot.left
         expect(robot.direction).to eq direction
       end
     end
-
   end
 
-  context "with RIGHT command" do
-
-    it "has no effect before PLACE" do
+  context 'with RIGHT command' do
+    it 'has no effect before PLACE' do
       robot = Robot::Robot.new
       robot.right
       expect(robot.direction).to be_nil
     end
 
-    it "turns right" do
+    it 'turns right' do
       robot = Robot::Robot.new
       robot.place 2, 2, :north
-      [:east, :south, :west, :north].each do |direction|
+      %i[east south west north].each do |direction|
         robot.right
         expect(robot.direction).to eq direction
       end
     end
-
   end
 
-  context "with REPORT command" do
-
-    it "has no effect before PLACE" do
+  context 'with REPORT command' do
+    it 'has no effect before PLACE' do
       robot = Robot::Robot.new
       expect(robot.report).to be_nil
     end
 
-    it "returns a non-empty string" do
+    it 'returns a non-empty string' do
       robot = Robot::Robot.new
       robot.place 1, 2, :north
       output = robot.report
@@ -150,7 +140,7 @@ RSpec.describe Robot::Robot do
       expect(output.empty?).to be false
     end
 
-    it "returns three comma-separated values" do
+    it 'returns three comma-separated values' do
       robot = Robot::Robot.new
       robot.place 1, 2, :north
       output = robot.report
@@ -158,7 +148,7 @@ RSpec.describe Robot::Robot do
       expect(output.split(',').length).to eq 3
     end
 
-    it "returns an accurate position" do
+    it 'returns an accurate position' do
       robot = Robot::Robot.new
       10.times do
         x = rand(5)
@@ -168,7 +158,7 @@ RSpec.describe Robot::Robot do
       end
     end
 
-    it "returns an accurate direction" do
+    it 'returns an accurate direction' do
       robot = Robot::Robot.new
       10.times do
         direction = Robot::DIRECTIONS.sample
@@ -176,7 +166,5 @@ RSpec.describe Robot::Robot do
         expect(robot.report).to match(/,#{direction.to_s.upcase}$/)
       end
     end
-
   end
-
 end
