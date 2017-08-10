@@ -45,6 +45,10 @@ module Robot
       @direction = nil
     end
 
+    def on_table?
+      !@position.nil?
+    end
+
     def place(x, y, direction)
       raise ArgumentError, "invalid direction" unless DIRECTIONS.include? direction
       @position = Position.new(x, y, @grid)
@@ -52,15 +56,19 @@ module Robot
     end
 
     def move
+      return unless on_table?
     end
 
     def left
+      return unless on_table?
     end
 
     def right
+      return unless on_table?
     end
 
     def report
+      return unless on_table?
     end
   end
 
