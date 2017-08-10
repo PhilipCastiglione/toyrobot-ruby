@@ -35,7 +35,7 @@ Bundler (see the Dependencies section above).
 
 To run the tests, invoke:
 
-    $ rspec
+    $ rake spec
 
 
 ## Overview
