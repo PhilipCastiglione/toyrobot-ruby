@@ -50,7 +50,6 @@ RSpec.describe Robot::Parser do
 
   it "returns appropriate types for command arguments" do
     prog = Robot::Parser.new(PROGRAM)
-    commands = Set.new
     prog.run do |tokens|
       command = tokens.first
       if command == :place

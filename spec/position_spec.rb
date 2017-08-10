@@ -10,8 +10,8 @@ RSpec.describe Robot::Position do
     expect(position.y).to eq 0
 
     position = Robot::Position.new(99, 99, grid)
-    expect(position.x).to eq (grid.width - 1)
-    expect(position.y).to eq (grid.height - 1)
+    expect(position.x).to eq(grid.width - 1)
+    expect(position.y).to eq(grid.height - 1)
   end
 
 end

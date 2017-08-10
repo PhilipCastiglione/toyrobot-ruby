@@ -154,7 +154,7 @@ RSpec.describe Robot::Robot do
       robot = Robot::Robot.new
       robot.place 1, 2, :north
       output = robot.report
-      expect(output).to match /,/
+      expect(output).to match(/,/)
       expect(output.split(',').length).to eq 3
     end
 
@@ -164,7 +164,7 @@ RSpec.describe Robot::Robot do
         x = rand(5)
         y = rand(5)
         robot.place x, y, :north
-        expect(robot.report).to match /^#{x},#{y},/
+        expect(robot.report).to match(/^#{x},#{y},/)
       end
     end
 
@@ -173,7 +173,7 @@ RSpec.describe Robot::Robot do
       10.times do
         direction = Robot::DIRECTIONS.sample
         robot.place 2, 2, direction
-        expect(robot.report).to match /,#{direction.to_s.upcase}$/
+        expect(robot.report).to match(/,#{direction.to_s.upcase}$/)
       end
     end
 
