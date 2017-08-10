@@ -17,10 +17,9 @@ module Robot
     def run(text)
       output = []
       Parser.parse(text) do |tokens|
-        line = run_command(tokens)
-        output << line unless line.nil?
+        output << run_command(tokens)
       end
-      output
+      output.compact
     end
 
     def on_table?
