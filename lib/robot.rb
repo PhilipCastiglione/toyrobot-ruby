@@ -71,16 +71,9 @@ module Robot
 
     def report
       return unless on_table?
+      return unless DIRECTIONS.include? @direction
 
-      direction = case @direction
-                  when :north then 'NORTH'
-                  when :east then 'EAST'
-                  when :south then 'SOUTH'
-                  when :west then 'WEST'
-                  else ''
-                  end
-
-      "#{@position.x},#{@position.y},#{direction}"
+      "#{@position.x},#{@position.y},#{@direction.to_s.upcase}"
     end
 
     private
