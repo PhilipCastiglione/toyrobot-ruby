@@ -4,8 +4,9 @@ module Robot
     attr_reader :x, :y, :direction
 
     def initialize(grid_width=5, grid_height=5)
-      raise "Width must be greater than zero" if grid_width <= 0
-      raise "Height must be greater than zero" if grid_height <= 0
+      if grid_width <= 0 or grid_height <= 0
+        raise ArgumentError, "width and height must be greater than zero"
+      end
 
       @grid_width = grid_width
       @grid_height = grid_height

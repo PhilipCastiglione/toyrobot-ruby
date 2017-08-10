@@ -17,5 +17,13 @@ RSpec.describe Robot do
     end
 
   end
-end
 
+  context "given invalid parameters" do
+
+    it "fails to initialize" do
+      expect { Robot::Robot.new(0, 5) }.to raise_error(ArgumentError)
+      expect { Robot::Robot.new(5, 0) }.to raise_error(ArgumentError)
+    end
+
+  end
+end
