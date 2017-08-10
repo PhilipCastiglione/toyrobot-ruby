@@ -34,6 +34,22 @@ module Robot
       @x = Position::clamp(0, x, grid.width - 1)
       @y = Position::clamp(0, y, grid.height - 1)
     end
+
+    def north(grid)
+      Position.new(@x, @y + 1, grid)
+    end
+
+    def south(grid)
+      Position.new(@x, @y - 1, grid)
+    end
+
+    def east(grid)
+      Position.new(@x + 1, @y, grid)
+    end
+
+    def west(grid)
+      Position.new(@x - 1, @y, grid)
+    end
   end
 
   class Robot
@@ -57,6 +73,13 @@ module Robot
 
     def move
       return unless on_table?
+
+      case @direction
+      when :north then @position = @position.north(@grid)
+      when :south then @position = @position.south(@grid)
+      when :east then @position = @position.east(@grid)
+      when :west then @position = @position.west(@grid)
+      end
     end
 
     def left

@@ -3,6 +3,7 @@ require "spec_helper"
 require "robot"
 
 RSpec.describe Robot do
+
   context "with PLACE command" do
 
     robot = Robot::Robot.new
@@ -28,4 +29,51 @@ RSpec.describe Robot do
     end
 
   end
+
+  context "with MOVE command" do
+
+    it "has no effect before PLACE" do
+      robot = Robot::Robot.new
+      robot.move
+      expect(robot.position).to be_nil
+    end
+
+    it "moves north" do
+      robot = Robot::Robot.new
+      robot.place 2, 2, :north
+      robot.move
+      expect(robot.position.x).to eq 2
+      expect(robot.position.y).to eq 3
+      expect(robot.direction).to eq :north
+    end
+
+    it "moves south" do
+      robot = Robot::Robot.new
+      robot.place 2, 2, :south
+      robot.move
+      expect(robot.position.x).to eq 2
+      expect(robot.position.y).to eq 1
+      expect(robot.direction).to eq :south
+    end
+
+    it "moves east" do
+      robot = Robot::Robot.new
+      robot.place 2, 2, :east
+      robot.move
+      expect(robot.position.x).to eq 3
+      expect(robot.position.y).to eq 2
+      expect(robot.direction).to eq :east
+    end
+
+    it "moves west" do
+      robot = Robot::Robot.new
+      robot.place 2, 2, :west
+      robot.move
+      expect(robot.position.x).to eq 1
+      expect(robot.position.y).to eq 2
+      expect(robot.direction).to eq :west
+    end
+
+  end
+
 end
