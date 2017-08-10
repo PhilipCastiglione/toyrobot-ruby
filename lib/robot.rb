@@ -56,11 +56,31 @@ module Robot
 
   class Robot
     attr_reader :position, :direction
+    attr_accessor :silent
 
     def initialize(grid=nil)
       @grid = grid || Grid.new
       @position = nil
       @direction = nil
+      @silent = false
+    end
+
+    def run(text)
+      output = []
+      parser = Parser.new(text)
+      parser.run do |tokens|
+        case tokens.first
+        when :place then place(tokens[1], tokens[2], tokens[3])
+        when :move then move
+        when :left then left
+        when :right then right
+        when :report
+          line = report
+          puts(line) unless @silent
+          output << line
+        end
+      end
+      output
     end
 
     def on_table?
