@@ -3,3 +3,4 @@ source 'https://rubygems.org'
 
 # Development and testing
 gem 'rspec', require: false
+gem 'rubocop', require: false
