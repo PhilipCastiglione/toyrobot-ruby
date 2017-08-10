@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require "spec_helper"
+
 require "robot"
 
-RSpec.describe Robot do
+RSpec.describe Robot::Robot do
 
   context "with PLACE command" do
 

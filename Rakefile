@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Include the 'spec' task provided by RSpec. If RSpec is not available, define
 # a 'spec' task to show an appropriate message.
 begin

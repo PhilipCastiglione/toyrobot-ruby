@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require "spec_helper"
+
 require "robot"
 
-RSpec.describe Robot do
+RSpec.describe Robot::Robot do
   context "before receiving a PLACE command" do
 
     robot = Robot::Robot.new
 
-    it "has no position" do
+    it "has no position or direction" do
       expect(robot.on_table?).to be false
       expect(robot.position).to be_nil
     end
