@@ -84,10 +84,24 @@ module Robot
 
     def left
       return unless on_table?
+
+      case @direction
+      when :north then @direction = :west
+      when :west then @direction = :south
+      when :south then @direction = :east
+      when :east then @direction = :north
+      end
     end
 
     def right
       return unless on_table?
+
+      case @direction
+      when :north then @direction = :east
+      when :east then @direction = :south
+      when :south then @direction = :west
+      when :west then @direction = :north
+      end
     end
 
     def report

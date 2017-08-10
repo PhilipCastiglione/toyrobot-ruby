@@ -76,4 +76,35 @@ RSpec.describe Robot do
 
   end
 
+  context "with LEFT and RIGHT commands" do
+
+    it "has no effect before PLACE" do
+      robot = Robot::Robot.new
+      robot.left
+      expect(robot.direction).to be_nil
+      robot = Robot::Robot.new
+      robot.right
+      expect(robot.direction).to be_nil
+    end
+
+    it "turns left" do
+      robot = Robot::Robot.new
+      robot.place 2, 2, :north
+      [:west, :south, :east, :north].each do |direction|
+        robot.left
+        expect(robot.direction).to eq direction
+      end
+    end
+
+    it "turns right" do
+      robot = Robot::Robot.new
+      robot.place 2, 2, :north
+      [:east, :south, :west, :north].each do |direction|
+        robot.right
+        expect(robot.direction).to eq direction
+      end
+    end
+
+  end
+
 end
