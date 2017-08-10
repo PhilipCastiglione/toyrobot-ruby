@@ -41,8 +41,8 @@ module Robot
 
       case @direction
       when :north then @position = @position.north(@grid)
-      when :south then @position = @position.south(@grid)
       when :east then @position = @position.east(@grid)
+      when :south then @position = @position.south(@grid)
       when :west then @position = @position.west(@grid)
       end
     end
@@ -52,9 +52,9 @@ module Robot
 
       case @direction
       when :north then @direction = :west
-      when :west then @direction = :south
-      when :south then @direction = :east
       when :east then @direction = :north
+      when :south then @direction = :east
+      when :west then @direction = :south
       end
     end
 
