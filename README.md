@@ -6,14 +6,23 @@ This is a Ruby simulation of a toy robot moving on a square tabletop.
 
 ## Environment
 
+This application was developed on macOS 10.12 with Ruby 2.4.1
+(installed with Homebrew).
 
-## Dependencies and Configuration
 
+## Dependencies
 
-To install the dependencies, `cd` to the root directory and invoke:
+To install the dependencies, `cd` to the root directory of the project
+and invoke:
 
     $ gem install bundler
     $ bundle install
+
+
+## Installation
+
+To learn how to install Ruby, visit:
+[https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/)
 
 
 ## Usage
@@ -22,8 +31,14 @@ To run the application with an input file, invoke:
 
     $ bin/robot commands.txt
 
-The file (*commands.txt*) must consist of a sequence of commands for the
-robot, with one command per line.
+The file must consist of a sequence of commands for the robot, with one
+command per line. For example:
+
+    PLACE 0,0,NORTH
+    MOVE
+    RIGHT
+    MOVE
+    REPORT
 
 Invoke `bin/robot` without arguments to read the commands from standard input.
 
@@ -33,18 +48,24 @@ Invoke `bin/robot` without arguments to read the commands from standard input.
 [RSpec](http://rspec.info) is required for testing. This is installed using
 Bundler (see the Dependencies section above).
 
-To run the tests, invoke:
+Tests are located in the *spec* folder. To run the tests, invoke:
 
     $ rake spec
 
 
 ## Overview
 
+TODO
+
 
 ## Discussion
 
+TODO
+
 
 ## Contributing
+
+TODO
 
 
 ## License
