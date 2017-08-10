@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 require "robot"
 
-RSpec.describe Robot::Parser do
+RSpec.describe Robot::Robot do
 
   context "with example input 1" do
     it "produces the expected output" do

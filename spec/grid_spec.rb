@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "robot"
 
 RSpec.describe Robot::Grid do

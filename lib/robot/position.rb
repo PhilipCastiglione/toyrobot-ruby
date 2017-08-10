@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Robot
 
   class Position
@@ -16,24 +14,24 @@ module Robot
     end
 
     def initialize(x, y, grid)
-      @x = Position::clamp(0, x, grid.width - 1)
-      @y = Position::clamp(0, y, grid.height - 1)
+      @x = self.class.clamp(0, x, grid.width - 1)
+      @y = self.class.clamp(0, y, grid.height - 1)
     end
 
     def north(grid)
-      Position.new(@x, @y + 1, grid)
+      self.class.new(@x, @y + 1, grid)
     end
 
     def south(grid)
-      Position.new(@x, @y - 1, grid)
+      self.class.new(@x, @y - 1, grid)
     end
 
     def east(grid)
-      Position.new(@x + 1, @y, grid)
+      self.class.new(@x + 1, @y, grid)
     end
 
     def west(grid)
-      Position.new(@x - 1, @y, grid)
+      self.class.new(@x - 1, @y, grid)
     end
   end
 

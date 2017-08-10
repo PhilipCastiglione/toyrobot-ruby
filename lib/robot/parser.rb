@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Robot
 
   class Parser
@@ -12,8 +10,7 @@ module Robot
       return nil unless tokens.length == 3
 
       begin
-        x = Integer(tokens[0])
-        y = Integer(tokens[1])
+        x, y = Integer(tokens[0]), Integer(tokens[1])
       rescue ArgumentError, TypeError
         return nil
       end
@@ -28,7 +25,7 @@ module Robot
         command = tokens.first.downcase.to_sym rescue nil
 
         if command == :place
-          args = Parser::parse_arg_for_place(tokens[1])
+          args = self.class.parse_arg_for_place(tokens[1])
           yield [command] + args unless args.nil?
         elsif [:move, :left, :right, :report].include? command
           yield [command]

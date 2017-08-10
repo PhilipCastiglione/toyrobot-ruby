@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'robot/grid'
 require 'robot/parser'
 require 'robot/position'
@@ -14,8 +12,6 @@ module Robot
 
     def initialize(grid=nil)
       @grid = grid || Grid.new
-      @position = nil
-      @direction = nil
       @silent = false
     end
 
