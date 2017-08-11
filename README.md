@@ -184,9 +184,10 @@ robot on the table:
 This design makes it easy for the `Position` class to take on the
 responsibility of *validating* the robot's movement:
 
-  - When a `Position` instance is initialised, the values are clamped such
-    that it represents a point on the edge of the table that is closest to the
-    requested position. Only these clamped coordinates are stored.
+  - When a new `Position` is instantiated, it clamps the coordinate values to
+    stay within the range of the tabletop. So, if it is given coordinates
+    outside that range (i.e. off the table), the values are clamped to a point
+    on the edge of the table that is closest to those coordinates.
 
   - As a result, if the robot attempts to step off the edge of the table, it
     will be corrected by the `Position` class, remaining in the same spot on
