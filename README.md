@@ -1,7 +1,8 @@
 Toy Robot Simulator
 ===================
 
-![https://travis-ci.org/araile/toyrobot-ruby](https://travis-ci.org/araile/toyrobot-ruby.svg?branch=develop)
+[![Travis CI Build Status](https://travis-ci.org/araile/toyrobot-ruby.svg?branch=master)](https://travis-ci.org/araile/toyrobot-ruby)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umocx44phb1pj92h/branch/master?svg=true)](https://ci.appveyor.com/project/araile/toyrobot-ruby/branch/master)
 
 This is a Ruby simulation of a toy robot moving on a square tabletop.
 
@@ -11,9 +12,14 @@ This is a Ruby simulation of a toy robot moving on a square tabletop.
 This application requires Ruby 2.0 or greater.
 It has been tested in the following environments:
 
-  - macOS 10.12, Ruby 2.4.1 with Homebrew (development machine)
-  - Linux, Ruby 2.0.x – 2.4.x (tested with Travis CI)
-  - Linux, JRuby 9.x (tested with Travis CI)
+  - macOS 10.12, Ruby 2.4.1 with [Homebrew][brew] (development machine)
+  - Linux, Ruby 2.0.x – 2.4.x ([tested with Travis CI][travis])
+  - Linux, JRuby 9.x ([tested with Travis CI][travis])
+  - Windows, Ruby 2.0.x – 2.4.x ([tested with AppVeyor][appveyor])
+
+[brew]: https://brew.sh
+[travis]: https://travis-ci.org/araile/toyrobot-ruby
+[appveyor]: https://ci.appveyor.com/project/araile/toyrobot-ruby
 
 
 ## Installation
@@ -56,7 +62,7 @@ Bundler (see the Dependencies section above).
 
 Tests are located in the *spec* folder. To run the tests, invoke:
 
-    $ rake spec
+    $ bundle exec rake
 
 
 ## Overview

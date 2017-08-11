@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+gem 'rake'
+
 group :testing do
   gem 'rspec', require: false
 end
