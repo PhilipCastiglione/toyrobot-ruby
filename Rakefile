@@ -11,7 +11,14 @@ rescue LoadError
   end
 end
 
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new
+# Include the tasks provided by Rubocop.
+begin
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+rescue LoadError
+  task :rubocop do
+    $stderr.puts 'Failed to load Rubocop. Please run: $ bundle install'
+  end
+end
 
 task :default => :spec
