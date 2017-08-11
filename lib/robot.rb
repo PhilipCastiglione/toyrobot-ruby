@@ -6,7 +6,7 @@ module Robot
   DIRECTIONS = %i[north east south west].freeze
 
   class Robot
-    attr_reader :position, :direction
+    attr_reader :position, :direction, :grid
     attr_accessor :silent
 
     def initialize(grid = nil)

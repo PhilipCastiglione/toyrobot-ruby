@@ -23,6 +23,13 @@ RSpec.describe Robot::Robot do
     it 'must have a valid direction' do
       expect { robot.place 0, 0, :hubwards }.to raise_error(ArgumentError)
     end
+
+    it 'will be placed on the edge if given an invalid position' do
+      robot.place -1, 99, :north
+      expect(robot.on_table?).to be true
+      expect(robot.position.x).to eq 0
+      expect(robot.position.y).to eq(robot.grid.width - 1)
+    end
   end
 
   context 'with MOVE command' do
