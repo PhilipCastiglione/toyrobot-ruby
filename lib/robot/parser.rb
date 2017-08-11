@@ -1,5 +1,14 @@
 module Robot
+  ##
+  # User input parser module.
   module Parser
+    ##
+    # Parse user input consisting of a series of commands, one per line.
+    #
+    # For each valid command, this yields an array of tokens, where the first
+    # token is a symbol representing the command, and the remaining tokens are
+    # the command's arguments.
+    #
     def self.parse(text)
       text.split("\n").each do |line|
         tokens = line.split
@@ -14,6 +23,16 @@ module Robot
       end
     end
 
+    ##
+    # Parse the arguments for a PLACE command.
+    #
+    # This attempts to parse a string of the form +x,y,f+. Values +x+ and +y+
+    # must be integers, and +f+ must be one of +NORTH+, +EAST+, +SOUTH+, or
+    # +WEST+.
+    #
+    # Returns an array of three elements [x, y, f] if the string is parsed
+    # successfully, and +nil+ otherwise.
+    #
     def self.parse_arg_for_place(string)
       tokens = string.split(',') rescue []
       return nil unless tokens.length == 3

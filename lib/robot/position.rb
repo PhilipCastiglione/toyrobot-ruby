@@ -1,4 +1,9 @@
 module Robot
+  ##
+  # This class represents a given (x, y) position on a tabletop. It provides
+  # methods for accessing adjacent positions, and is responsible for clamping
+  # the coordinates to stay within the range of a given tabletop.
+  #
   class Position
     attr_reader :x, :y
 

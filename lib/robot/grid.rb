@@ -1,4 +1,7 @@
 module Robot
+  ##
+  # This class represents the dimensions of a tabletop.
+  #
   class Grid
     attr_reader :width, :height
 

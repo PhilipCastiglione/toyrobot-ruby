@@ -141,7 +141,7 @@ It consists of the following:
   - A `DIRECTIONS` array (*lib/robot.rb*)
     containing the symbols `:north`, `:east`, `:south` and `:west`.
 
-  - A `Parser` class (*lib/robot/parser.rb*)
+  - A `Parser` module (*lib/robot/parser.rb*)
     which reads lines from a string and translates them into 'tokens' to be
     processed by the `Robot` class.
 
@@ -205,11 +205,11 @@ of the table.
 
 ### Parsing
 
-The application uses a `Parser` class to process user input. This reads
+The application uses a `Parser` module to process user input. This reads
 commands from user input and translates them into command *tokens*, which are
 then passed up to the `Robot` class to perform the appropriate actions.
 
-The `Parser` class is wholly responsible for discarding invalid commands and
+The `Parser` module is wholly responsible for discarding invalid commands and
 converting the command arguments into appropriate types.
 
 I chose the following rules for parsing commands:
@@ -248,7 +248,7 @@ Given the user input:
     MOVE
     REPORT
 
-The `Parser` class will pass three arrays up to the `Robot` class:
+The `Parser` module will pass three arrays up to the `Robot` class:
 
     [:place, 0, 0, :north]
     [:move]

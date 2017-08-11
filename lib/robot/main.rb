@@ -1,4 +1,7 @@
 module Robot
+  ##
+  # Main entry method. This is invoke by the +robot+ program.
+  #
   def self.main
     program = if ARGV.empty?
                 $stdin.read

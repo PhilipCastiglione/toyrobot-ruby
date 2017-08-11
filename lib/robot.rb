@@ -2,9 +2,15 @@ require 'robot/grid'
 require 'robot/parser'
 require 'robot/position'
 
+##
+# Toy robot module.
 module Robot
   DIRECTIONS = %i[north east south west].freeze
 
+  ##
+  # This class represents a toy robot which can move around the surface of
+  # a table.
+  #
   class Robot
     attr_reader :position, :direction, :grid
     attr_accessor :silent
