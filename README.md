@@ -58,7 +58,7 @@ Invoke `bin/robot` without arguments to read the commands from standard input.
 ## Testing
 
 [RSpec](http://rspec.info) is required for testing. This is installed using
-Bundler (see the Dependencies section above).
+Bundler (see the *Dependencies* section above).
 
 Tests are located in the *spec* folder. To run the tests, invoke:
 
@@ -67,12 +67,163 @@ Tests are located in the *spec* folder. To run the tests, invoke:
 
 ## Overview
 
-TODO
+This is a similation of a toy robot moving on a square tabletop of dimensions
+5&times;5 units. There are no other obstructions on the table surface. The
+robot is free to roam around the surface of the table, and is prevented from
+falling to destruction.
+
+The application reads a series of text commands, one per line. It accepts the
+following commands:
+
+  - `PLACE x,y,f` will put the toy robot in position (*x*,&nbsp;*y*) and
+    facing in direction *f*, where *f* is one of `NORTH`, `EAST`, `SOUTH`, or
+    `WEST`. Point (0,&nbsp;0) is the south-west corner; point (4,&nbsp;4) is
+    the north-east corner.
+
+  - `MOVE` will move the robot one unit forward.
+
+  - `LEFT` and `RIGHT` will rotate the robot 90 degrees in the specified
+    direction, without changing its position.
+
+  - `REPORT` will print the current position and direction of the robot, in
+    the form `x,y,f`. For example, if the robot is at (1,&nbsp;2) and facing
+    north, `REPORT` will print `1,2,NORTH`.
+
+The robot will not be placed on the table until it received a `PLACE` command.
+Until then, it must discard any other commands it receives.
+
+The robot must not fall off the table during movement or initial placement.
+
+
+## Design
+
+The application consists of the following:
+
+  * A *lib* folder defining a `Robot` module.
+  * A *bin* folder containing a script to launch the application.
+  * A *spec* folder containing RSpec tests.
+
+### Launch
+
+*bin/robot* is a short script which includes all the files from the *lib*
+folder that define the application.
+
+It then calls the `Robot.main` method, which is defined in
+*lib/robot/main.rb*. This method does the following:
+
+ 1. First it reads user input, which consists of a series of commands for the
+    robot, one per line.
+
+    If the script was invoked with one or more arguments, text is read from
+    the file specified by the first argument. If it was invoked without
+    arguments, text is read from standard input.
+
+ 1. Once it has some text, it creates a `Robot` instance and 'runs' it with
+    the text. The results of any `REPORT` commands in the text are written to
+    standard output.
+
+### Robot module
+
+The `Robot` module is defined by files in the *lib* and *lib/robot* folders.
+It consists of the following:
+
+  - A `Robot` class (*lib/robot.rb*)
+    which reads a sequence of commands and responds to them, tracking the
+    position and direction of the robot.
+
+  - A `Grid` class (*lib/robot/grid.rb*)
+    which stores the width and height of the tabletop.
+
+  - A `Position` class (*lib/robot/position.rb*)
+    which stores a given (*x*, *y*) coordinate. This class is responsible for
+    clamping the values to within the range defined by a given `Grid`.
+
+  - A `DIRECTIONS` array (*lib/robot.rb*)
+    containing the symbols `:north`, `:east`, `:south` and `:west`.
+
+  - A `Parser` class (*lib/robot/parser.rb*)
+    which reads lines from a string and translates them into 'tokens' to be
+    used by the `Robot` class. This class is responsible for discarding
+    invalid commands and converting the command arguments into integers and
+    symbols.
+
+  - A `main` method (*lib/robot/main.rb*)
+    which is described in the *Launch* section above.
 
 
 ## Discussion
 
-TODO
+For this application I chose to use a TDD approach. I wrote tests with RSpec,
+and wrote code to satisfy the tests.
+
+I found that this helped me to isolate different elements of functionality,
+and design an appropriate interface for each class. It also allowed me to
+delay the task of parsing user input, to focus on making the robot work as
+expected. Once the robot was functional, its API was simple enough for me that
+writing the command parser was relatively straightforward.
+
+### Movement
+
+The robot uses an instance of the `Grid` class to store the width and height
+of the table. (In hindsight, a name like `TableTop` would be more
+descriptive.) It defaults to a size of 5&times;5 units, but can be initialised
+with any other size, provided that the width and height are both greater than
+zero.
+
+I chose to use the `Position` class to manage the position and movement of the
+robot on the table:
+
+  - The robot's initial position is `nil`, representing that it is off the
+    table.
+
+  - When the robot is placed on the table, it creates a `Position` instance
+    and stores it as its current position.
+
+  - When the robot moves, it asks its current `Position` to create a new
+    `Position` that is one step in the given direction. The robot stores this
+    new instance as its current position.
+
+This design makes it easy for the `Position` class to take on the
+responsibility of *validating* the robot's movement:
+
+  - When a `Position` instance is initialised, it clamps the requested
+    coordinates to fit within the range of coordinates on the table (as
+    specified by the `Grid`). Only these clamped coordinates are stored.
+
+  - As a result, if the robot attempts to step off the edge of the table, it
+    will be corrected by the `Position` class before the position is stored.
+
+This removes responsibility from the `Robot` class, simplifying the
+implementations of the robot commands.
+
+### Parsing
+
+I chose to allow the following when parsing commands:
+
+  - Extraneous whitespace is ignored.
+  - Extraneous command arguments are ignored.
+    For example, `LEFT 2 3 4` is interpreted as `LEFT`.
+
+For the `PLACE x,y,f` command, I decided to be strict about parsing the
+`x,y,f` arguments. The `PLACE` command will only be accepted if the following
+are true:
+
+  - It has three values.
+  - The first two values are integers.
+  - The third value is one of the four recognised directions.
+
+I used `Integer()` to verify *x* and *y*. If I had used `to_i` instead, any
+invalid values would be treated as 0, calling for the robot to be placed on
+the south and/or west edges of the table.
+
+One ambiguous point is what to do if the *x* and *y* values point to a
+position off the table. The application could discard the command, or it could
+position the robot somewhere else that *is* on the table.
+
+I have chosen the latter with the following approach: The robot will be
+positioned at a point on the edge of the table that is closest to the
+requested position. This functionality is provided for free by the design of
+the `Position` class, as discussed in the *Movement* section above.
 
 
 ## License
