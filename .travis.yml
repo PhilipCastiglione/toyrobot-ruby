@@ -1,0 +1,24 @@
+language: ruby
+
+rvm:
+  - 2.4
+  - 2.3
+  - 2.2
+  - 2.1
+  - 2.0
+  - jruby
+
+bundler_args: --without development
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - ruby: jruby
+
+sudo: false
+
+before_install:
+  - gem update --system
+
+script:
+ - rake spec

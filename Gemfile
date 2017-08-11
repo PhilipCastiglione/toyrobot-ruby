@@ -2,6 +2,10 @@
 
 source 'https://rubygems.org'
 
-# Development and testing
-gem 'rspec', require: false
-gem 'rubocop', require: false
+group :testing do
+  gem 'rspec', require: false
+end
+
+group :development do
+  gem 'rubocop', require: false
+end
