@@ -1,13 +1,25 @@
 Toy Robot Simulator
 ===================
 
+![https://travis-ci.org/araile/toyrobot-ruby](https://travis-ci.org/araile/toyrobot-ruby.svg?branch=develop)
+
 This is a Ruby simulation of a toy robot moving on a square tabletop.
 
 
 ## Environment
 
-This application was developed on macOS 10.12 with Ruby 2.4.1
-(installed with Homebrew).
+This application requires Ruby 2.0 or greater.
+It has been tested in the following environments:
+
+  - macOS 10.12, Ruby 2.4.1 with Homebrew (development machine)
+  - Linux, Ruby 2.0.x – 2.4.x (tested with Travis CI)
+  - Linux, JRuby 9.x (tested with Travis CI)
+
+
+## Installation
+
+To learn how to install Ruby, visit:
+[https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/)
 
 
 ## Dependencies
@@ -17,12 +29,6 @@ and invoke:
 
     $ gem install bundler
     $ bundle install
-
-
-## Installation
-
-To learn how to install Ruby, visit:
-[https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/)
 
 
 ## Usage
@@ -59,11 +65,6 @@ TODO
 
 
 ## Discussion
-
-TODO
-
-
-## Contributing
 
 TODO
 
