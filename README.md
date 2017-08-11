@@ -143,9 +143,7 @@ It consists of the following:
 
   - A `Parser` class (*lib/robot/parser.rb*)
     which reads lines from a string and translates them into 'tokens' to be
-    used by the `Robot` class. This class is responsible for discarding
-    invalid commands and converting the command arguments into integers and
-    symbols.
+    processed by the `Robot` class.
 
   - A `main` method (*lib/robot/main.rb*)
     which is described in the *Launch* section above.
@@ -186,44 +184,61 @@ robot on the table:
 This design makes it easy for the `Position` class to take on the
 responsibility of *validating* the robot's movement:
 
-  - When a `Position` instance is initialised, it clamps the requested
-    coordinates to fit within the range of coordinates on the table (as
-    specified by the `Grid`). Only these clamped coordinates are stored.
+  - When a `Position` instance is initialised, the values are clamped such
+    that it represents a point on the edge of the table that is closest to the
+    requested position. Only these clamped coordinates are stored.
 
   - As a result, if the robot attempts to step off the edge of the table, it
-    will be corrected by the `Position` class before the position is stored.
+    will be corrected by the `Position` class, remaining in the same spot on
+    the table.
 
 This removes responsibility from the `Robot` class, simplifying the
 implementations of the robot commands.
 
+One ambiguous point in the problem description is how to handle an invalid
+position when *placing* the robot (rather than moving it). Should the
+application discard the command, or place the robot somewhere else that *is*
+on the table? I have chosen the latter as this behaviour is provided for free
+by the above design: the robot will be placed at the closest point on the edge
+of the table.
+
+
 ### Parsing
 
-I chose to allow the following when parsing commands:
+The application uses a `Parser` class to process user input. This reads
+commands from user input and translates them into command *tokens*, which are
+then passed up to the `Robot` class to perform the appropriate actions.
+
+The `Parser` class is wholly responsible for discarding invalid commands and
+converting the command arguments into appropriate types.
+
+I chose the following rules for parsing commands:
 
   - Extraneous whitespace is ignored.
+
   - Extraneous command arguments are ignored.
     For example, `LEFT 2 3 4` is interpreted as `LEFT`.
 
-For the `PLACE x,y,f` command, I decided to be strict about parsing the
-`x,y,f` arguments. The `PLACE` command will only be accepted if the following
+  - Invalid commands are quietly ignored.
+
+  - The parser is stateless. (The `Robot` class is responsible for ignoring
+    commands before the first `PLACE` command.)
+
+In addition, I decided to be strict about parsing the `x,y,f` arguments to the
+`PLACE x,y,f` command. A `PLACE` command will only be valid if the following
 are true:
 
   - It has three values.
   - The first two values are integers.
   - The third value is one of the four recognised directions.
 
-I used `Integer()` to verify *x* and *y*. If I had used `to_i` instead, any
+I used `Integer()` to convert *x* and *y* to integers, as this raises an
+exception if they cannot be converted. If I had used `to_i` instead, any
 invalid values would be treated as 0, calling for the robot to be placed on
 the south and/or west edges of the table.
 
-One ambiguous point is what to do if the *x* and *y* values point to a
-position off the table. The application could discard the command, or it could
-position the robot somewhere else that *is* on the table.
-
-I have chosen the latter with the following approach: The robot will be
-positioned at a point on the edge of the table that is closest to the
-requested position. This functionality is provided for free by the design of
-the `Position` class, as discussed in the *Movement* section above.
+When a valid command is parsed, the result is an array of tokens. These are
+interpreted by the `Robot` class, which decides how to act on them.
 
 
 ## License
