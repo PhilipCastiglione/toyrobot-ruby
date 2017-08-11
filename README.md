@@ -240,6 +240,26 @@ the south and/or west edges of the table.
 When a valid command is parsed, the result is an array of tokens. These are
 interpreted by the `Robot` class, which decides how to act on them.
 
+#### Parsing Example
+
+Given the user input:
+
+    PLACE 0,0,NORTH
+    MOVE
+    REPORT
+
+The `Parser` class will pass three arrays up to the `Robot` class:
+
+    [:place, 0, 0, :north]
+    [:move]
+    [:report]
+
+The `Robot` will then perform the equivalent of the following code:
+
+    robot.place(0, 0, :north)
+    robot.move
+    robot.report
+
 
 ## License
 
