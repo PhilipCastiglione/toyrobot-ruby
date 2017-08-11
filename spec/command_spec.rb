@@ -25,7 +25,7 @@ RSpec.describe Robot::Robot do
     end
 
     it 'will be placed on the edge if given an invalid position' do
-      robot.place -1, 99, :north
+      robot.place(-1, 99, :north)
       expect(robot.on_table?).to be true
       expect(robot.position.x).to eq 0
       expect(robot.position.y).to eq(robot.grid.width - 1)
