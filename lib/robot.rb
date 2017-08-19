@@ -1,6 +1,7 @@
 require 'robot/grid'
 require 'robot/parser'
 require 'robot/position'
+require 'robot/version'
 
 ##
 # Toy robot module.
