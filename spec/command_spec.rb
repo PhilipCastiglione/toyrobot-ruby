@@ -1,34 +1,68 @@
 require 'robot'
 
+def random_grid
+  Robot::Grid.new(rand(10) + 1, rand(10) + 1)
+end
+
+def random_direction
+  Robot::DIRECTIONS.sample
+end
+
 RSpec.describe Robot::Robot do
   context 'with PLACE command' do
-    robot = Robot::Robot.new
+    it 'saves the position and direction' do
+      10.times do
+        robot = Robot::Robot.new(random_grid)
+        x = rand(robot.grid.width)
+        y = rand(robot.grid.height)
+        f = random_direction
 
-    it 'saves the position' do
-      robot.place 1, 2, :north
-      expect(robot.position.x).to eq 1
-      expect(robot.position.y).to eq 2
-      robot.place 3, 4, :south
-      expect(robot.position.x).to eq 3
-      expect(robot.position.y).to eq 4
-    end
-
-    it 'saves the direction' do
-      robot.place 1, 2, :north
-      expect(robot.direction).to eq :north
-      robot.place 3, 4, :south
-      expect(robot.direction).to eq :south
+        robot.place(x, y, f)
+        expect(robot.position.x).to eq x
+        expect(robot.position.y).to eq y
+        expect(robot.direction).to eq f
+      end
     end
 
     it 'must have a valid direction' do
-      expect { robot.place 0, 0, :hubwards }.to raise_error(ArgumentError)
+      robot = Robot::Robot.new
+      expect { robot.place(0, 0, :hubwards) }.to raise_error(ArgumentError)
     end
 
     it 'will be placed on the edge if given an invalid position' do
-      robot.place(-1, 99, :north)
-      expect(robot.on_table?).to be true
-      expect(robot.position.x).to eq 0
-      expect(robot.position.y).to eq(robot.grid.height - 1)
+      10.times do
+        robot = Robot::Robot.new(random_grid)
+        max_x = robot.grid.width - 1
+        max_y = robot.grid.height - 1
+
+        f = random_direction
+        robot.place(-1, -1, f)
+        expect(robot.on_table?).to be true
+        expect(robot.position.x).to eq 0
+        expect(robot.position.y).to eq 0
+        expect(robot.direction).to eq f
+
+        f = random_direction
+        robot.place(-1, 99, f)
+        expect(robot.on_table?).to be true
+        expect(robot.position.x).to eq 0
+        expect(robot.position.y).to eq max_y
+        expect(robot.direction).to eq f
+
+        f = random_direction
+        robot.place(99, -1, f)
+        expect(robot.on_table?).to be true
+        expect(robot.position.x).to eq max_x
+        expect(robot.position.y).to eq 0
+        expect(robot.direction).to eq f
+
+        f = random_direction
+        robot.place(99, 99, f)
+        expect(robot.on_table?).to be true
+        expect(robot.position.x).to eq max_x
+        expect(robot.position.y).to eq max_y
+        expect(robot.direction).to eq f
+      end
     end
   end
 
@@ -76,26 +110,29 @@ RSpec.describe Robot::Robot do
     end
 
     it 'does not fall off the table' do
-      grid = Robot::Grid.new
-      robot = Robot::Robot.new(grid)
-      max_x = grid.width - 1
-      max_y = grid.height - 1
+      10.times do
+        robot = Robot::Robot.new(random_grid)
+        width = robot.grid.width
+        height = robot.grid.height
+        max_x = width - 1
+        max_y = height - 1
 
-      robot.place 0, 0, :west
-      robot.move
-      expect(robot.position.x).to eq 0
+        robot.place 0, rand(height), :west
+        robot.move
+        expect(robot.position.x).to eq 0
 
-      robot.place 0, 0, :south
-      robot.move
-      expect(robot.position.y).to eq 0
+        robot.place rand(width), 0, :south
+        robot.move
+        expect(robot.position.y).to eq 0
 
-      robot.place max_x, max_y, :east
-      robot.move
-      expect(robot.position.x).to eq max_x
+        robot.place max_x, rand(height), :east
+        robot.move
+        expect(robot.position.x).to eq max_x
 
-      robot.place max_x, max_y, :north
-      robot.move
-      expect(robot.position.y).to eq max_y
+        robot.place rand(width), max_y, :north
+        robot.move
+        expect(robot.position.y).to eq max_y
+      end
     end
   end
 
@@ -155,22 +192,14 @@ RSpec.describe Robot::Robot do
       expect(output.split(',').length).to eq 3
     end
 
-    it 'returns an accurate position' do
-      robot = Robot::Robot.new
+    it 'returns an accurate position and direction' do
+      robot = Robot::Robot.new(random_grid)
       10.times do
-        x = rand(5)
-        y = rand(5)
-        robot.place x, y, :north
-        expect(robot.report).to match(/^#{x},#{y},/)
-      end
-    end
-
-    it 'returns an accurate direction' do
-      robot = Robot::Robot.new
-      10.times do
-        direction = Robot::DIRECTIONS.sample
-        robot.place 2, 2, direction
-        expect(robot.report).to match(/,#{direction.to_s.upcase}$/)
+        x = rand(robot.grid.width)
+        y = rand(robot.grid.height)
+        f = random_direction
+        robot.place(x, y, f)
+        expect(robot.report).to match(/^#{x},#{y},#{f.to_s.upcase}$/)
       end
     end
   end
