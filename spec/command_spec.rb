@@ -28,7 +28,7 @@ RSpec.describe Robot::Robot do
       robot.place(-1, 99, :north)
       expect(robot.on_table?).to be true
       expect(robot.position.x).to eq 0
-      expect(robot.position.y).to eq(robot.grid.width - 1)
+      expect(robot.position.y).to eq(robot.grid.height - 1)
     end
   end
 
