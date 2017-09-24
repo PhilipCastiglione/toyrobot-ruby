@@ -1,7 +1,7 @@
 Toy Robot Simulator
 ===================
 
-[![Travis CI Build Status](https://travis-ci.org/ljcooke/toyrobot-ruby.svg?branch=master)](https://travis-ci.org/araile/toyrobot-ruby)
+[![Travis CI Build Status](https://travis-ci.org/ljcooke/toyrobot-ruby.svg?branch=master)](https://travis-ci.org/ljcooke/toyrobot-ruby)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umocx44phb1pj92h/branch/master?svg=true)](https://ci.appveyor.com/project/ljcooke/toyrobot-ruby/branch/master)
 
 This is a Ruby simulation of a toy robot moving on a square tabletop.
