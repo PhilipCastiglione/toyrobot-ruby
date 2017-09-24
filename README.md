@@ -1,8 +1,8 @@
 Toy Robot Simulator
 ===================
 
-[![Travis CI Build Status](https://travis-ci.org/araile/toyrobot-ruby.svg?branch=master)](https://travis-ci.org/araile/toyrobot-ruby)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umocx44phb1pj92h/branch/master?svg=true)](https://ci.appveyor.com/project/araile/toyrobot-ruby/branch/master)
+[![Travis CI Build Status](https://travis-ci.org/ljcooke/toyrobot-ruby.svg?branch=master)](https://travis-ci.org/araile/toyrobot-ruby)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/umocx44phb1pj92h/branch/master?svg=true)](https://ci.appveyor.com/project/ljcooke/toyrobot-ruby/branch/master)
 
 This is a Ruby simulation of a toy robot moving on a square tabletop.
 
@@ -18,8 +18,8 @@ It has been tested in the following environments:
   - Windows, Ruby 2.0.x – 2.4.x ([tested with AppVeyor][appveyor])
 
 [brew]: https://brew.sh
-[travis]: https://travis-ci.org/araile/toyrobot-ruby
-[appveyor]: https://ci.appveyor.com/project/araile/toyrobot-ruby
+[travis]: https://travis-ci.org/ljcooke/toyrobot-ruby
+[appveyor]: https://ci.appveyor.com/project/ljcooke/toyrobot-ruby
 
 
 ## Installation
